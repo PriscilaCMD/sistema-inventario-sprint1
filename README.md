@@ -1,16 +1,39 @@
-# React + Vite
+# Sistema de Inventario – Sprint 1
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Proyecto desarrollado en React como parte de la Actividad Integradora: Sprint, el corazón de SCRUM.
 
-Currently, two official plugins are available:
+## Objetivo del Sprint 1
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Implementar el control básico de inventario permitiendo:
 
-## React Compiler
+- Registrar productos
+- Definir stock mínimo y máximo
+- Registrar entradas de productos
+- Actualizar el stock dinámicamente
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Tecnologías utilizadas
 
-## Expanding the ESLint configuration
+- React
+- Vite
+- JavaScript
+- Node.js
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Funcionalidad
+
+La aplicación permite:
+
+1. Registrar nuevos productos con stock inicial.
+2. Definir niveles mínimo y máximo de inventario.
+3. Registrar entradas de productos existentes.
+4. Actualizar automáticamente el stock en pantalla.
+
+Este incremento corresponde a las historias de usuario:
+- PB2 – Registrar productos
+- PB3 – Definir stock mínimo y máximo
+- PB4 – Registrar entradas
+
+## Cómo ejecutar el proyecto
+
+```bash
+npm install
+npm run dev
