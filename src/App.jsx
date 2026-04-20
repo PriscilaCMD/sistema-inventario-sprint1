@@ -1,6 +1,8 @@
-import { useState } from "react";
+import { useState } from "react"; 
 
 function App() {
+  const [mensaje, setMensaje] = useState("");
+  const [tipoMensaje, setTipoMensaje] = useState("");
   const [nombre, setNombre] = useState("");
   const [stock, setStock] = useState(0);
   const [minimo, setMinimo] = useState(0);
@@ -9,8 +11,10 @@ function App() {
   const [entrada, setEntrada] = useState({});
 
   const agregarProducto = () => {
-    if (!nombre) return;
-
+    if (!nombre || stock <= 0 || minimo <= 0 || maximo <= 0) {
+      setMensaje("Completa todos los campos correctamente");
+      return;
+    }
     const nuevo = {
       id: Date.now(),
       nombre,
@@ -20,6 +24,11 @@ function App() {
     };
 
     setProductos([...productos, nuevo]);
+    setMensaje("Producto agregado correctamente");
+    setTipoMensaje("success");
+    setTimeout(() => {
+      setMensaje("");
+    }, 3000);
     setNombre("");
     setStock(0);
     setMinimo(0);
@@ -28,6 +37,15 @@ function App() {
 
   const agregarEntrada = (id) => {
     const cantidad = Number(entrada[id] || 0);
+    if (cantidad <= 0) {
+      setMensaje("Ingresa una cantidad válida");
+      setTipoMensaje("error");
+      setTimeout(() => {
+        setMensaje("");
+      }, 3000);
+
+      return;
+    }
 
     const actualizados = productos.map((p) => {
       if (p.id === id) {
@@ -41,81 +59,114 @@ function App() {
   };
 
   return (
-    <div style={{ padding: "40px", fontFamily: "Arial" }}>
-      <h1>Sistema de Inventario</h1>
+    <div style={{ 
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "flex-start",
+      minHeight: "100vh",
+      fontFamily: "Arial",
+      paddingTop: "40px"
+    }}>      
+        <div style={{
+          width: "400px",
+          backgroundColor: "#1e1e1e",
+          padding: "30px",
+          borderRadius: "10px",
+          boxShadow: "0 0 10px rgba(0,0,0,0.5)"
+        }}>
+        <h1>Sistema de Inventario</h1>
 
-      <h2>Registrar Producto</h2>
+        <h2>Registrar Producto</h2>
+        {mensaje && (
+          <p style={{ 
+            color: tipoMensaje === "error" ? "red" : "green",
+            fontWeight: "bold"
+          }}>
+            {mensaje}
+          </p>
+        )}
 
-      <div style={{ marginBottom: "10px" }}>
-        <label>Nombre del producto:</label><br />
-        <input
-          type="text"
-          value={nombre}
-          onChange={(e) => setNombre(e.target.value)}
-        />
-      </div>
-
-      <div style={{ marginBottom: "10px" }}>
-        <label>Stock inicial:</label><br />
-        <input
-          type="number"
-          value={stock}
-          onChange={(e) => setStock(e.target.value)}
-        />
-      </div>
-
-      <div style={{ marginBottom: "10px" }}>
-        <label>Stock mínimo:</label><br />
-        <input
-          type="number"
-          value={minimo}
-          onChange={(e) => setMinimo(e.target.value)}
-        />
-      </div>
-
-      <div style={{ marginBottom: "10px" }}>
-        <label>Stock máximo:</label><br />
-        <input
-          type="number"
-          value={maximo}
-          onChange={(e) => setMaximo(e.target.value)}
-        />
-      </div>
-
-      <button onClick={agregarProducto} style={{ padding: "8px 15px" }}>
-        Agregar Producto
-      </button>
-
-      <hr style={{ margin: "30px 0" }} />
-
-      <h2>Lista de Productos</h2>
-
-      {productos.length === 0 && <p>No hay productos registrados.</p>}
-
-      {productos.map((p) => (
-        <div key={p.id} style={{ marginBottom: "15px" }}>
-          <strong>{p.nombre}</strong><br />
-          Stock: {p.stock} | Mín: {p.minimo} | Máx: {p.maximo}
-
-          <div style={{ marginTop: "5px" }}>
-            <input
-              type="number"
-              placeholder="Cantidad a agregar"
-              value={entrada[p.id] || ""}
-              onChange={(e) =>
-                setEntrada({ ...entrada, [p.id]: e.target.value })
-              }
-            />
-            <button
-              onClick={() => agregarEntrada(p.id)}
-              style={{ marginLeft: "5px" }}
-            >
-              Registrar Entrada
-            </button>
-          </div>
+        <div style={{ marginBottom: "10px" }}>
+          <label>Nombre del producto:</label><br />
+          <input
+            type="text"
+            value={nombre}
+            onChange={(e) => setNombre(e.target.value)}
+          />
         </div>
-      ))}
-    </div>
+
+        <div style={{ marginBottom: "10px" }}>
+          <label>Stock inicial:</label><br />
+          <input
+            type="number"
+            value={stock}
+            onChange={(e) => setStock(e.target.value)}
+          />
+        </div>
+
+        <div style={{ marginBottom: "10px" }}>
+          <label>Stock mínimo:</label><br />
+          <input
+            type="number"
+            value={minimo}
+            onChange={(e) => setMinimo(e.target.value)}
+          />
+        </div>
+
+        <div style={{ marginBottom: "10px" }}>
+          <label>Stock máximo:</label><br />
+          <input
+            type="number"
+            value={maximo}
+            onChange={(e) => setMaximo(e.target.value)}
+          />
+        </div>
+
+        <button
+            onClick={agregarProducto}
+            style={{
+              padding: "8px 15px",
+              backgroundColor: "#4CAF50",
+              color: "white",
+              border: "none",
+              borderRadius: "5px",
+              cursor: "pointer"
+            }}
+        >
+          Agregar Producto
+        </button>
+
+        <hr style={{ margin: "30px 0" }} />
+
+        <h2>Lista de Productos</h2>
+
+        {productos.length === 0 && <p>No hay productos registrados.</p>}
+
+        {productos.map((p) => (
+          <div key={p.id} style={{ marginBottom: "15px" }}>
+            <strong>{p.nombre}</strong><br />
+            Stock: {p.stock} | Mín: {p.minimo} | Máx: {p.maximo}
+
+            <div style={{ marginTop: "5px" }}>
+              <input
+                type="number"
+                placeholder="Cantidad a agregar"
+                value={entrada[p.id] || ""}
+                onChange={(e) =>
+                  setEntrada({ ...entrada, [p.id]: e.target.value })
+                }
+              />
+              <button
+                onClick={() => agregarEntrada(p.id)}
+                style={{ marginLeft: "5px" }}
+              >
+                Registrar Entrada
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
+     </div>
   );
 }
 
