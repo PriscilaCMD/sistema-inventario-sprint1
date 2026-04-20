@@ -1,6 +1,6 @@
 # Sistema de Inventario – Sprint 1
 
-Proyecto desarrollado en React como parte de la Actividad Integradora: Sprint, el corazón de SCRUM.
+Proyecto desarrollado en React como parte del seguimiento de Sprints, aplicando la metodología SCRUM en la planificación, desarrollo y mejora continua del sistema de inventarios.
 
 ## Objetivo del Sprint 1
 
