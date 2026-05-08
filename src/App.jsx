@@ -1,4 +1,4 @@
-import { useState } from "react"; 
+import { useState } from "react";
 
 function App() {
   const [mensaje, setMensaje] = useState("");
@@ -46,7 +46,6 @@ function App() {
 
       return;
     }
-
     const actualizados = productos.map((p) => {
       if (p.id === id) {
         return { ...p, stock: p.stock + cantidad };
@@ -58,27 +57,44 @@ function App() {
     setEntrada({ ...entrada, [id]: 0 });
   };
 
+  const eliminarProducto = (id) => {
+      const filtrados = productos.filter((p) => p.id !== id);
+
+      setProductos(filtrados);
+
+      setMensaje("Producto eliminado correctamente");
+      setTipoMensaje("success");
+
+      setTimeout(() => {
+        setMensaje("");
+      }, 3000);
+    };
+
   return (
-    <div style={{ 
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "flex-start",
-      minHeight: "100vh",
-      fontFamily: "Arial",
-      paddingTop: "40px"
-    }}>      
-        <div style={{
-          width: "400px",
-          backgroundColor: "#1e1e1e",
-          padding: "30px",
-          borderRadius: "10px",
-          boxShadow: "0 0 10px rgba(0,0,0,0.5)"
-        }}>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        minHeight: "100vh",
+        backgroundColor: "#1a1a1a",
+        fontFamily: "Arial",
+        color: "white"
+      }}
+    >
+      <div style={{
+        width: "500px",
+        backgroundColor: "#1e1e1e",
+        padding: "30px",
+        borderRadius: "10px",
+        boxShadow: "0 0 10px rgba(0,0,0,0.5)",
+        textAligns: "left",
+      }}>
         <h1>Sistema de Inventario</h1>
 
         <h2>Registrar Producto</h2>
         {mensaje && (
-          <p style={{ 
+          <p style={{
             color: tipoMensaje === "error" ? "red" : "green",
             fontWeight: "bold"
           }}>
@@ -123,15 +139,15 @@ function App() {
         </div>
 
         <button
-            onClick={agregarProducto}
-            style={{
-              padding: "8px 15px",
-              backgroundColor: "#4CAF50",
-              color: "white",
-              border: "none",
-              borderRadius: "5px",
-              cursor: "pointer"
-            }}
+          onClick={agregarProducto}
+          style={{
+            padding: "8px 15px",
+            backgroundColor: "#4CAF50",
+            color: "white",
+            border: "none",
+            borderRadius: "5px",
+            cursor: "pointer"
+          }}
         >
           Agregar Producto
         </button>
@@ -146,6 +162,11 @@ function App() {
           <div key={p.id} style={{ marginBottom: "15px" }}>
             <strong>{p.nombre}</strong><br />
             Stock: {p.stock} | Mín: {p.minimo} | Máx: {p.maximo}
+            {p.stock <= p.minimo && (
+              <p style={{ color: "orange", fontWeight: "bold" }}>
+                ⚠ Stock bajo
+              </p>
+            )}
 
             <div style={{ marginTop: "5px" }}>
               <input
@@ -162,11 +183,25 @@ function App() {
               >
                 Registrar Entrada
               </button>
+              <button
+                onClick={() => eliminarProducto(p.id)}
+                style={{
+                  marginLeft: "5px",
+                  backgroundColor: "#f44336",
+                  color: "white",
+                  border: "none",
+                  padding: "5px 10px",
+                  borderRadius: "5px",
+                  cursor: "pointer"
+                }}
+              >
+                Eliminar
+              </button>
             </div>
           </div>
         ))}
       </div>
-     </div>
+    </div>
   );
 }
 
