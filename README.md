@@ -1,4 +1,4 @@
-# Sistema de Inventario – Sprint 1
+# Sistema de Inventario 
 
 Proyecto desarrollado en React como parte del seguimiento de Sprints, aplicando la metodología SCRUM en la planificación, desarrollo y mejora continua del sistema de inventarios.
 
